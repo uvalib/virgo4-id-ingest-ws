@@ -3,7 +3,7 @@ module github.com/uvalib/virgo4-id-ingest-ws
 go 1.15
 
 require (
-	github.com/aws/aws-sdk-go v1.44.178 // indirect
+	github.com/aws/aws-sdk-go v1.44.181 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/gin-gonic/gin v1.8.2
 	github.com/go-playground/locales v0.14.1 // indirect
