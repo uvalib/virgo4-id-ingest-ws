@@ -12,6 +12,8 @@ type ServiceConfig struct {
 	OutQueueName      string // SQS queue name for outbound documents
 	DataSourceName    string // the name to associate the data with. Each record has metadata showing this value
 	MessageBucketName string // the bucket to use for large messages
+
+	PayloadFormat string // the format of the generated payload, e.g "<id>%s</id>"
 }
 
 func ensureSet(env string) string {
@@ -57,11 +59,13 @@ func LoadConfiguration() *ServiceConfig {
 	cfg.OutQueueName = ensureSetAndNonEmpty("VIRGO4_ID_INGEST_WS_OUT_QUEUE")
 	cfg.DataSourceName = ensureSetAndNonEmpty("VIRGO4_ID_INGEST_WS_DATA_SOURCE")
 	cfg.MessageBucketName = ensureSetAndNonEmpty("VIRGO4_SQS_MESSAGE_BUCKET")
+	cfg.PayloadFormat = ensureSetAndNonEmpty("VIRGO4_ID_INGEST_WS_PAYLOAD_FORMAT")
 
 	log.Printf("[CONFIG] ServicePort         = [%d]", cfg.ServicePort)
 	log.Printf("[CONFIG] OutQueueName        = [%s]", cfg.OutQueueName)
 	log.Printf("[CONFIG] DataSourceName      = [%s]", cfg.DataSourceName)
 	log.Printf("[CONFIG] MessageBucketName   = [%s]", cfg.MessageBucketName)
+	log.Printf("[CONFIG] PayloadFormat       = [%s]", cfg.PayloadFormat)
 
 	return &cfg
 }

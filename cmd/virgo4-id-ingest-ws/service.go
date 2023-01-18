@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -112,11 +113,12 @@ func (svc *ServiceContext) queueOutbound(id string) error {
 // construct the outbound SQS message
 func (svc *ServiceContext) constructMessage(id string) *awssqs.Message {
 
+	payload := fmt.Sprintf(svc.config.PayloadFormat, id)
 	attributes := make([]awssqs.Attribute, 0, 5)
 	attributes = append(attributes, awssqs.Attribute{Name: awssqs.AttributeKeyRecordId, Value: id})
 	attributes = append(attributes, awssqs.Attribute{Name: awssqs.AttributeKeyRecordSource, Value: svc.config.DataSourceName})
 	attributes = append(attributes, awssqs.Attribute{Name: awssqs.AttributeKeyRecordOperation, Value: awssqs.AttributeValueRecordOperationUpdate})
-	return &awssqs.Message{Attribs: attributes, Payload: []byte(id)}
+	return &awssqs.Message{Attribs: attributes, Payload: []byte(payload)}
 }
 
 //
